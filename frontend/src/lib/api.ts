@@ -7,9 +7,13 @@ export function apiPath(path: string): string {
   return `${API_URL}${p}`;
 }
 
-/** Static asset path with basePath for GitHub Pages */
+/** Static asset path with basePath for GitHub Pages. Returns absolute URL in browser. */
 export function assetPath(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
-  const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
-  return base ? `${base}${p}` : p;
+  const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "").replace(/^\/+/, "");
+  const pathStr = base ? `/${base}${p}` : p;
+  if (typeof window !== "undefined") {
+    return window.location.origin + pathStr;
+  }
+  return pathStr;
 }
