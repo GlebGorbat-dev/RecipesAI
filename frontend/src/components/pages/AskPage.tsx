@@ -3,8 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
 import AppHeader from "@/components/AppHeader";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { API_URL } from "@/lib/api";
 
 export default function AskPage() {
   const { token, isLoading } = useAuth();

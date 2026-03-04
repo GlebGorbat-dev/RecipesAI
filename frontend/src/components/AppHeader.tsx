@@ -3,8 +3,7 @@
 import { HashLink } from "@/lib/hashRouter";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { API_URL } from "@/lib/api";
 
 export default function AppHeader() {
   const { token, logout } = useAuth();

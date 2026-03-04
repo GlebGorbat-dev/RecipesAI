@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { HashLink } from "@/lib/hashRouter";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { API_URL } from "@/lib/api";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

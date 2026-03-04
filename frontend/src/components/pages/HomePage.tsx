@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { API_URL } from "@/lib/api";
 
 export default function HomePage() {
   const { token, login, register, forgotPassword, isLoading } = useAuth();
