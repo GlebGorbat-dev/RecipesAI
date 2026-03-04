@@ -20,7 +20,7 @@ class BaseConfig:
     VS_ID = os.getenv('VS_ID')
 
     SECRET_KEY = os.getenv('SECRET_KEY')
-    ALGORITHM = os.getenv('ALGORITHM')
+    ALGORITHM = os.getenv('ALGORITHM', 'HS256')
     ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES', '60'))
 
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000").strip().rstrip("/")
