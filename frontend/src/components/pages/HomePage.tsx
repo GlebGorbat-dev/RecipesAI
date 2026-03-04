@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { API_URL } from "@/lib/api";
+import { apiPath } from "@/lib/api";
 
 export default function HomePage() {
   const { token, login, register, forgotPassword, isLoading } = useAuth();
@@ -167,7 +167,7 @@ export default function HomePage() {
             {!showForgotPassword && (
               <div className="mt-4">
                 <a
-                  href={`${API_URL}/api/v1/auth/google`}
+                  href={apiPath("api/v1/auth/google")}
                   className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 py-2 text-gray-700 transition hover:bg-gray-50"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 24 24">
