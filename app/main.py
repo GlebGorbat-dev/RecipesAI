@@ -1,4 +1,5 @@
 import logging
+import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
@@ -8,6 +9,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="RecipesAI")
+
+
+@app.on_event("startup")
+def startup():
+    logger.info("FRONTEND_URL=%s (env: %s)", settings.FRONTEND_URL, os.getenv("FRONTEND_URL", "<not set>"))
 
 
 @app.get("/")
