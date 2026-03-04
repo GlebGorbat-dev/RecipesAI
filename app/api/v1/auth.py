@@ -16,12 +16,6 @@ from app.core.email import send_email, get_password_reset_email_html, get_passwo
 
 router = APIRouter()
 
-@router.get("/google/debug")
-async def google_debug():
-    """Временный endpoint для проверки redirect_uri (удалить после отладки)."""
-    return {"redirect_uri": f"{settings.FRONTEND_URL}/auth/google/callback"}
-
-
 @router.get("/google")
 async def google_oauth():
     if not settings.GOOGLE_CLIENT_ID:

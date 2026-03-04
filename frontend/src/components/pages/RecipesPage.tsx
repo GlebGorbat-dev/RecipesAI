@@ -4,18 +4,19 @@ import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import AppHeader from "@/components/AppHeader";
 import { HashLink } from "@/lib/hashRouter";
+import { assetPath } from "@/lib/api";
 
 const MOCK_RECIPES = [
-  { id: "1", title: "Classic Carbonara", excerpt: "Creamy Italian pasta with eggs, cheese, and guanciale. A Roman staple that comes together in minutes.", image: "/images/recipes/carbonara.webp" },
-  { id: "2", title: "Tomato Basil Bruschetta", excerpt: "Fresh tomatoes, basil, and garlic on toasted bread. Perfect as an appetizer or light snack.", image: "/images/recipes/tom_basil.webp" },
-  { id: "3", title: "Chocolate Brownies", excerpt: "Rich, fudgy brownies with a crackly top. Simple ingredients, maximum chocolate flavor.", image: "/images/recipes/brownie.webp" },
-  { id: "4", title: "Russian Borsch", excerpt: "Classic Eastern European beetroot soup with beef, cabbage, and sour cream. Hearty and warming.", image: "/images/recipes/borsch.webp" },
-  { id: "5", title: "Pasta Bolognese", excerpt: "Traditional Italian meat sauce with tomatoes, ground beef, and herbs. Served over spaghetti or tagliatelle.", image: "/images/recipes/bolognese.webp" },
-  { id: "6", title: "Easy Lasagna", excerpt: "Layers of pasta, rich meat sauce, and creamy cheese. A crowd-pleasing comfort food ready with minimal fuss.", image: "/images/recipes/lasagna.webp" },
-  { id: "7", title: "Napoleon cake", excerpt: "Napoleon Cake is a popular Eastern European dessert, often considered a variation of Mille-Feuille in France or Cremeschnitte in Romania.", image: "/images/recipes/napoleon.webp" },
-  { id: "8", title: "Pizza Pepperoni", excerpt: "Classic pepperoni pizza.", image: "/images/recipes/pepperoni.jpg" },
-  { id: "9", title: "Chicken curry", excerpt: "Western style curry.", image: "/images/recipes/curry.webp" },
-  { id: "10", title: "Italian Tiramisu", excerpt: "Transport yourself to Italy with this classic Tiramisu recipe.", image: "/images/recipes/tiramisu.webp" },
+  { id: "1", title: "Classic Carbonara", excerpt: "Creamy Italian pasta with eggs, cheese, and guanciale. A Roman staple that comes together in minutes.", image: assetPath("/images/recipes/carbonara.webp") },
+  { id: "2", title: "Tomato Basil Bruschetta", excerpt: "Fresh tomatoes, basil, and garlic on toasted bread. Perfect as an appetizer or light snack.", image: assetPath("/images/recipes/tom_basil.webp") },
+  { id: "3", title: "Chocolate Brownies", excerpt: "Rich, fudgy brownies with a crackly top. Simple ingredients, maximum chocolate flavor.", image: assetPath("/images/recipes/brownie.webp") },
+  { id: "4", title: "Russian Borsch", excerpt: "Classic Eastern European beetroot soup with beef, cabbage, and sour cream. Hearty and warming.", image: assetPath("/images/recipes/borsch.webp") },
+  { id: "5", title: "Pasta Bolognese", excerpt: "Traditional Italian meat sauce with tomatoes, ground beef, and herbs. Served over spaghetti or tagliatelle.", image: assetPath("/images/recipes/bolognese.webp") },
+  { id: "6", title: "Easy Lasagna", excerpt: "Layers of pasta, rich meat sauce, and creamy cheese. A crowd-pleasing comfort food ready with minimal fuss.", image: assetPath("/images/recipes/lasagna.webp") },
+  { id: "7", title: "Napoleon cake", excerpt: "Napoleon Cake is a popular Eastern European dessert, often considered a variation of Mille-Feuille in France or Cremeschnitte in Romania.", image: assetPath("/images/recipes/napoleon.webp") },
+  { id: "8", title: "Pizza Pepperoni", excerpt: "Classic pepperoni pizza.", image: assetPath("/images/recipes/pepperoni.jpg") },
+  { id: "9", title: "Chicken curry", excerpt: "Western style curry.", image: assetPath("/images/recipes/curry.webp") },
+  { id: "10", title: "Italian Tiramisu", excerpt: "Transport yourself to Italy with this classic Tiramisu recipe.", image: assetPath("/images/recipes/tiramisu.webp") },
 ];
 
 export default function RecipesPage() {

@@ -2,11 +2,11 @@
 import os
 import stripe
 from sqlalchemy.orm import Session
+from app.core.config import settings
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 PRICE_ID = os.getenv("STRIPE_PRICE_ID_PREMIUM")
 WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
 
 def create_checkout_session(user_id: int, email: str, success_url: str | None = None, cancel_url: str | None = None) -> str:
@@ -15,8 +15,8 @@ def create_checkout_session(user_id: int, email: str, success_url: str | None = 
         customer_email=email,
         line_items=[{"price": PRICE_ID, "quantity": 1}],
         mode="subscription",
-        success_url=success_url or f"{FRONTEND_URL}/payments/success?session_id={{CHECKOUT_SESSION_ID}}",
-        cancel_url=cancel_url or f"{FRONTEND_URL}/payments/cancel",
+        success_url=success_url or f"{settings.FRONTEND_URL}/payments/success?session_id={{CHECKOUT_SESSION_ID}}",
+        cancel_url=cancel_url or f"{settings.FRONTEND_URL}/payments/cancel",
         metadata={"user_id": str(user_id)},
     )
     return session.url

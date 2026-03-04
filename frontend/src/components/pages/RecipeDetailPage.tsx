@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { assetPath } from "@/lib/api";
 import AppHeader from "@/components/AppHeader";
 import { HashLink } from "@/lib/hashRouter";
 
@@ -9,7 +10,7 @@ const MOCK: Record<string, { title: string; excerpt: string; content: string; im
   "1": {
     title: "Classic Carbonara",
     excerpt: "Creamy Italian pasta with eggs, cheese, and guanciale.",
-    image: "/images/recipes/carbonara.webp",
+    image: assetPath("/images/recipes/carbonara.webp"),
     content: `Spaghetti Carbonara is an iconic Italian pasta dish that has gained popularity all around the world. With its rich and creamy sauce, savory pancetta, and perfectly cooked pasta, this recipe is a true delight for pasta lovers.
 
 Ingredients:
@@ -43,7 +44,7 @@ Divide among serving plates. Garnish with grated Pecorino Romano, black pepper, 
   "2": {
     title: "Tomato Basil Bruschetta",
     excerpt: "Fresh tomatoes, basil, and garlic on toasted bread.",
-    image: "/images/recipes/tom_basil.webp",
+    image: assetPath("/images/recipes/tom_basil.webp"),
     content: `Delicious and tender tomato bruschetta is considered the hallmark of Italy. These crispy sandwiches are famous worldwide. When prepared correctly, this appetizer should have a fresh, rich flavor.
 
 Ingredients:
@@ -64,7 +65,7 @@ Grind the ciabatta slices with a little olive oil and toast them on the grill or
   "3": {
     title: "Chocolate Brownies",
     excerpt: "Rich, fudgy brownies with a crackly top.",
-    image: "/images/recipes/brownie.webp",
+    image: assetPath("/images/recipes/brownie.webp"),
     content: `Chocolate Brownie – can be made in the oven or microwave.
 
 Ingredients:
@@ -89,7 +90,7 @@ The brownie should be slightly moist when cooled. Cut into pieces and serve with
   "4": {
     title: "Russian Borsch",
     excerpt: "Classic Eastern European beetroot soup with beef, cabbage, and sour cream.",
-    image: "/images/recipes/borsch.webp",
+    image: assetPath("/images/recipes/borsch.webp"),
     content: `Borsch is the famous soup in many Russian families, as well as many Eastern and Central European countries. Vegetables (mainly beet) and sour cream are always the main ingredients.
 
 Ingredients:
@@ -122,7 +123,7 @@ Tips: Sour cream is served separately or added right before serving.`,
   "5": {
     title: "Pasta Bolognese",
     excerpt: "Traditional Italian meat sauce with tomatoes, ground beef, and herbs.",
-    image: "/images/recipes/bolognese.webp",
+    image: assetPath("/images/recipes/bolognese.webp"),
     content: `Pasta Bolognese – a classic Italian favorite.
 
 Ingredients:
@@ -138,7 +139,7 @@ Instructions:
   "6": {
     title: "Easy Lasagna",
     excerpt: "Layers of pasta, rich meat sauce, and creamy cheese.",
-    image: "/images/recipes/lasagna.webp",
+    image: assetPath("/images/recipes/lasagna.webp"),
     content: `Easy Lasagna – simple and delicious.
 
 Ingredients: Onion, garlic, tomato sauce, olive oil, ground meat, diced tomatoes, ricotta, lasagna noodles, seasonings.
@@ -152,25 +153,25 @@ Instructions:
   "7": {
     title: "Napoleon cake",
     excerpt: "Multiple thin layers of puff pastry with diplomat cream.",
-    image: "/images/recipes/napoleon.webp",
+    image: assetPath("/images/recipes/napoleon.webp"),
     content: `Napoleon cake: puff pastry layers with diplomat cream (pastry cream + whipped cream). Bake layers, assemble with cream, refrigerate overnight.`,
   },
   "8": {
     title: "Pizza Pepperoni",
     excerpt: "Classic pepperoni pizza.",
-    image: "/images/recipes/pepperoni.jpg",
+    image: assetPath("/images/recipes/pepperoni.jpg"),
     content: `Pepperoni pizza: dough, tomato sauce, mozzarella, pepperoni. Bake at 220°C for 15-20 min.`,
   },
   "9": {
     title: "Chicken Curry",
     excerpt: "Western style chicken curry.",
-    image: "/images/recipes/curry.webp",
+    image: assetPath("/images/recipes/curry.webp"),
     content: `Chicken curry: fry garlic, ginger, onion. Add chicken, curry powder. Add coconut milk and stock. Simmer. Add peas. Serve with rice.`,
   },
   "10": {
     title: "Italian Tiramisu",
     excerpt: "Espresso-soaked ladyfingers with mascarpone cream.",
-    image: "/images/recipes/tiramisu.webp",
+    image: assetPath("/images/recipes/tiramisu.webp"),
     content: `Tiramisu: mix egg yolks, sugar, mascarpone. Fold in whipped whites. Layer soaked ladyfingers and cream. Refrigerate 4+ hours. Dust with cocoa.`,
   },
 };
