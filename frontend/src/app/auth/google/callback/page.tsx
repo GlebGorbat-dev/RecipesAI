@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-export default function GoogleCallbackPage() {
+function GoogleCallbackContent() {
   const searchParams = useSearchParams();
   const { setToken } = useAuth();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -61,5 +61,13 @@ export default function GoogleCallbackPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function GoogleCallbackPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><p className="text-xl text-amber-900">Loading...</p></div>}>
+      <GoogleCallbackContent />
+    </Suspense>
   );
 }
