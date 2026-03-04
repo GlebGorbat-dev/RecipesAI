@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { HashLink } from "@/lib/hashRouter";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -48,12 +48,12 @@ function PaymentSuccessContent() {
             <p className="mb-6 text-gray-600">Your Premium subscription is now active. Enjoy unlimited AI requests.</p>
           </>
         )}
-        <Link
-          href="/profile"
+        <HashLink
+          href="#/profile"
           className="inline-block rounded-lg bg-amber-600 px-6 py-2 font-semibold text-white transition hover:bg-amber-700"
         >
           View Profile
-        </Link>
+        </HashLink>
       </div>
     </div>
   );

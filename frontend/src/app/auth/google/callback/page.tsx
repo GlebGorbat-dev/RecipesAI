@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { getHashHref } from "@/lib/hashRouter";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -38,7 +39,7 @@ function GoogleCallbackContent() {
         if (cancelled || !data) return;
         setToken(data.access_token);
         setStatus("success");
-        window.location.href = "/recipes";
+        window.location.href = getHashHref("/recipes");
       })
       .catch((err) => {
         if (!cancelled) {
@@ -55,7 +56,7 @@ function GoogleCallbackContent() {
       {status === "error" && (
         <>
           <p className="text-xl text-red-600">{error}</p>
-          <a href="/" className="text-amber-600 hover:underline">
+          <a href={getHashHref("/")} className="text-amber-600 hover:underline">
             Back to home
           </a>
         </>

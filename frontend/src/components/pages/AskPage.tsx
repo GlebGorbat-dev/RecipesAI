@@ -7,7 +7,7 @@ import AppHeader from "@/components/AppHeader";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function AskPage() {
-  const { token, isLoading, logout } = useAuth();
+  const { token, isLoading } = useAuth();
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; content: string }[]>([]);
   const [input, setInput] = useState("");
   const [isLoadingMsg, setIsLoadingMsg] = useState(false);
@@ -16,7 +16,7 @@ export default function AskPage() {
 
   useEffect(() => {
     if (!isLoading && !token) {
-      window.location.href = "/";
+      window.location.hash = "#/";
     }
   }, [token, isLoading]);
 
@@ -80,7 +80,6 @@ export default function AskPage() {
           Ask questions about recipes from our database.
         </p>
 
-        {/* Messages area - scrollable */}
         <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto rounded-xl border border-amber-200/80 bg-white p-3 shadow-sm sm:gap-4 sm:p-6">
           {messages.length === 0 && (
             <p className="text-center text-sm text-gray-700 sm:text-base">
@@ -110,7 +109,6 @@ export default function AskPage() {
           <div ref={bottomRef} />
         </div>
 
-        {/* Input - stays pinned at bottom */}
         <form
           onSubmit={(e) => {
             e.preventDefault();

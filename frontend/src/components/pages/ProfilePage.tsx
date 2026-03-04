@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import AppHeader from "@/components/AppHeader";
+import { HashLink } from "@/lib/hashRouter";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -24,7 +24,7 @@ interface Subscription {
 }
 
 export default function ProfilePage() {
-  const { token, isLoading, logout } = useAuth();
+  const { token, isLoading } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loadingData, setLoadingData] = useState(true);
@@ -32,7 +32,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!isLoading && !token) {
-      window.location.href = "/";
+      window.location.hash = "#/";
     }
   }, [token, isLoading]);
 
@@ -127,9 +127,9 @@ export default function ProfilePage() {
           </div>
         )}
 
-        <Link href="/recipes" className="mt-8 inline-block font-medium text-amber-800 hover:underline">
+        <HashLink href="#/recipes" className="mt-8 inline-block font-medium text-amber-800 hover:underline">
           ← Back to Recipes
-        </Link>
+        </HashLink>
       </main>
     </div>
   );

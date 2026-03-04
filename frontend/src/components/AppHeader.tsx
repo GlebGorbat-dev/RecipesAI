@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { HashLink } from "@/lib/hashRouter";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 
@@ -33,18 +33,18 @@ export default function AppHeader() {
   return (
     <header className="border-b border-amber-200/60 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:py-4">
-        <Link href="/recipes" className="text-lg font-bold text-stone-900 sm:text-xl">
+        <HashLink href="#/recipes" className="text-lg font-bold text-stone-900 sm:text-xl">
           Recipes Online
-        </Link>
+        </HashLink>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-3 sm:flex">
-          <Link
-            href="/ask"
+          <HashLink
+            href="#/ask"
             className="rounded-lg bg-amber-500 px-4 py-2 font-medium text-white transition hover:bg-amber-600"
           >
             Ask AI
-          </Link>
+          </HashLink>
           <button
             onClick={handlePremium}
             disabled={loadingPremium}
@@ -52,9 +52,9 @@ export default function AppHeader() {
           >
             {loadingPremium ? "Loading..." : "Premium"}
           </button>
-          <Link href="/profile" className="text-sm text-gray-700 hover:text-stone-900">
+          <HashLink href="#/profile" className="text-sm text-gray-700 hover:text-stone-900">
             Profile
-          </Link>
+          </HashLink>
           <button onClick={logout} className="text-sm text-gray-700 hover:text-stone-900">
             Sign Out
           </button>
@@ -81,13 +81,13 @@ export default function AppHeader() {
       {/* Mobile dropdown */}
       {menuOpen && (
         <nav className="flex flex-col gap-2 border-t border-amber-200/60 bg-white px-4 pb-4 pt-3 sm:hidden">
-          <Link
-            href="/ask"
+          <HashLink
+            href="#/ask"
             onClick={() => setMenuOpen(false)}
             className="rounded-lg bg-amber-500 px-4 py-2.5 text-center font-medium text-white transition hover:bg-amber-600"
           >
             Ask AI
-          </Link>
+          </HashLink>
           <button
             onClick={() => { setMenuOpen(false); handlePremium(); }}
             disabled={loadingPremium}
@@ -95,13 +95,13 @@ export default function AppHeader() {
           >
             {loadingPremium ? "Loading..." : "Premium"}
           </button>
-          <Link
-            href="/profile"
+          <HashLink
+            href="#/profile"
             onClick={() => setMenuOpen(false)}
             className="rounded-lg px-4 py-2.5 text-center text-gray-700 transition hover:bg-amber-50"
           >
             Profile
-          </Link>
+          </HashLink>
           <button
             onClick={() => { setMenuOpen(false); logout(); }}
             className="rounded-lg px-4 py-2.5 text-gray-700 transition hover:bg-amber-50"

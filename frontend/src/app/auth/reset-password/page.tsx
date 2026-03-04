@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { HashLink } from "@/lib/hashRouter";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -37,9 +37,9 @@ function ResetPasswordContent() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4">
         <p className="text-red-600">Invalid or missing reset token.</p>
-        <Link href="/" className="text-amber-600 hover:underline">
+        <HashLink href="#/" className="text-amber-600 hover:underline">
           Back to Sign In
-        </Link>
+        </HashLink>
       </div>
     );
   }
@@ -70,9 +70,9 @@ function ResetPasswordContent() {
             </button>
           </form>
         )}
-        <Link href="/" className="mt-4 block text-sm text-amber-700 hover:underline">
+        <HashLink href="#/" className="mt-4 block text-sm text-amber-700 hover:underline">
           Back to Sign In
-        </Link>
+        </HashLink>
       </div>
     </div>
   );

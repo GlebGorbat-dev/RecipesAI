@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { HashLink } from "@/lib/hashRouter";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -56,9 +56,9 @@ export default function ForgotPasswordPage() {
             </button>
           </form>
         )}
-        <Link href="/" className="mt-4 block text-sm text-amber-700 hover:underline">
+        <HashLink href="#/" className="mt-4 block text-sm text-amber-700 hover:underline">
           Back to Sign In
-        </Link>
+        </HashLink>
       </div>
     </div>
   );

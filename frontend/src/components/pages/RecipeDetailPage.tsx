@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import AppHeader from "@/components/AppHeader";
+import { HashLink } from "@/lib/hashRouter";
 
 const MOCK: Record<string, { title: string; excerpt: string; content: string; image: string }> = {
   "1": {
@@ -176,15 +175,13 @@ Instructions:
   },
 };
 
-export default function RecipeDetailClient() {
-  const params = useParams();
+export default function RecipeDetailPage({ id }: { id: string }) {
   const { token, isLoading } = useAuth();
-  const id = params?.id as string;
   const recipe = id ? MOCK[id] : undefined;
 
   useEffect(() => {
     if (!isLoading && !token) {
-      window.location.href = "/";
+      window.location.hash = "#/";
     }
   }, [token, isLoading]);
 
@@ -202,7 +199,7 @@ export default function RecipeDetailClient() {
     return (
       <div className="min-h-screen bg-amber-50 px-4 py-12">
         <AppHeader />
-        <Link href="/recipes" className="font-medium text-amber-800 hover:underline">← Back to recipes</Link>
+        <HashLink href="#/recipes" className="font-medium text-amber-800 hover:underline">← Back to recipes</HashLink>
         <p className="mt-4 text-gray-800">Recipe not found.</p>
       </div>
     );
@@ -212,7 +209,7 @@ export default function RecipeDetailClient() {
     <div className="min-h-screen bg-amber-50">
       <AppHeader />
       <main className="mx-auto max-w-2xl px-3 py-6 sm:px-4 sm:py-12">
-        <Link href="/recipes" className="mb-4 inline-block text-sm font-medium text-amber-800 hover:underline sm:mb-6 sm:text-base">← Back to recipes</Link>
+        <HashLink href="#/recipes" className="mb-4 inline-block text-sm font-medium text-amber-800 hover:underline sm:mb-6 sm:text-base">← Back to recipes</HashLink>
         <div className="overflow-hidden rounded-xl border border-amber-200/80 bg-white shadow-sm">
           <div className="aspect-[16/9] w-full overflow-hidden bg-amber-100">
             <img src={recipe.image} alt={recipe.title} className="h-full w-full object-cover" loading="lazy" />

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import AppHeader from "@/components/AppHeader";
+import { HashLink } from "@/lib/hashRouter";
 
 const MOCK_RECIPES = [
   { id: "1", title: "Classic Carbonara", excerpt: "Creamy Italian pasta with eggs, cheese, and guanciale. A Roman staple that comes together in minutes.", image: "/images/recipes/carbonara.webp" },
@@ -12,15 +12,10 @@ const MOCK_RECIPES = [
   { id: "4", title: "Russian Borsch", excerpt: "Classic Eastern European beetroot soup with beef, cabbage, and sour cream. Hearty and warming.", image: "/images/recipes/borsch.webp" },
   { id: "5", title: "Pasta Bolognese", excerpt: "Traditional Italian meat sauce with tomatoes, ground beef, and herbs. Served over spaghetti or tagliatelle.", image: "/images/recipes/bolognese.webp" },
   { id: "6", title: "Easy Lasagna", excerpt: "Layers of pasta, rich meat sauce, and creamy cheese. A crowd-pleasing comfort food ready with minimal fuss.", image: "/images/recipes/lasagna.webp" },
-  { id: "7", title: "Napoleon cake", excerpt: "Napoleon Cake is a popular Eastern European dessert, often considered a variation of Mille-Feuille in\n" +
-        "France or Cremeschnitte in Romania. Also known as Russian Napoleon Cake and French Napoleon Cake, this\n" +
-        "Napoleon dessert features multiple thin layers of crisp, buttery layers of puff pastry dough filled\n" +
-        "with rich, homemade diplomat cream. This cake is traditionally left to rest overnight, allowing the\n" +
-        "cream to soften the pastry for a tender, melt-in-your-mouth texture.", image: "/images/recipes/napoleon.webp" },
-  { id: "8", title: "Pizza Pepperoni", excerpt: "When it comes to classic comfort food, few dishes evoke the same universal delight as a perfectly crafted pepperoni pizza.", image: "/images/recipes/pepperoni.jpg" },
-  { id: "9", title: "Chicken curry", excerpt: "his recipe is a Western style curry –\n" +
-        "it’s not a traditional Indian curry, Thai curry, nor any other cuisine.", image: "/images/recipes/curry.webp" },
-  { id: "10", title: "Italian Tiramisu", excerpt: "Transport yourself to the bustling streets of Italy with this classic Tiramisu recipe.", image: "/images/recipes/tiramisu.webp" },
+  { id: "7", title: "Napoleon cake", excerpt: "Napoleon Cake is a popular Eastern European dessert, often considered a variation of Mille-Feuille in France or Cremeschnitte in Romania.", image: "/images/recipes/napoleon.webp" },
+  { id: "8", title: "Pizza Pepperoni", excerpt: "Classic pepperoni pizza.", image: "/images/recipes/pepperoni.jpg" },
+  { id: "9", title: "Chicken curry", excerpt: "Western style curry.", image: "/images/recipes/curry.webp" },
+  { id: "10", title: "Italian Tiramisu", excerpt: "Transport yourself to Italy with this classic Tiramisu recipe.", image: "/images/recipes/tiramisu.webp" },
 ];
 
 export default function RecipesPage() {
@@ -28,7 +23,7 @@ export default function RecipesPage() {
 
   useEffect(() => {
     if (!isLoading && !token) {
-      window.location.href = "/";
+      window.location.hash = "#/";
     }
   }, [token, isLoading]);
 
@@ -54,10 +49,10 @@ export default function RecipesPage() {
 
         <div className="grid gap-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
           {MOCK_RECIPES.map((r) => (
-            <Link
+            <HashLink
               key={r.id}
               href={`/recipes/${r.id}`}
-              className="group overflow-hidden rounded-xl border border-amber-200/80 bg-white shadow-sm transition hover:shadow-md hover:border-amber-300"
+              className="group block overflow-hidden rounded-xl border border-amber-200/80 bg-white shadow-sm transition hover:shadow-md hover:border-amber-300"
             >
               <div className="aspect-[4/3] w-full overflow-hidden bg-amber-100">
                 <img
@@ -72,7 +67,7 @@ export default function RecipesPage() {
                 <p className="line-clamp-3 text-xs text-gray-700 sm:text-sm">{r.excerpt}</p>
                 <span className="mt-2 inline-block text-xs font-medium text-amber-600 group-hover:underline sm:mt-3 sm:text-sm">View recipe →</span>
               </div>
-            </Link>
+            </HashLink>
           ))}
         </div>
 
