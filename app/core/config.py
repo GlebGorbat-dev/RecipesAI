@@ -34,6 +34,7 @@ class BaseConfig:
     SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
     SMTP_FROM_EMAIL = os.getenv('SMTP_FROM_EMAIL')
     SMTP_FROM_NAME = os.getenv('SMTP_FROM_NAME')
+    RESEND_API_KEY = os.getenv('RESEND_API_KEY')
 
 
 class DevelopmentConfig(BaseConfig):

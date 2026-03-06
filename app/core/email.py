@@ -1,17 +1,56 @@
+import logging
 import aiosmtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from app.core.config import settings
 
-async def send_email(to_email: str, subject: str, html_body: str, text_body: str = None):
+logger = logging.getLogger(__name__)
+
+
+async def send_email(to_email: str, subject: str, html_body: str, text_body: str = None) -> bool:
+    """Send email. Prefers Resend API (works on HF Spaces); falls back to SMTP."""
+    # Resend API — работает на HF Spaces (HTTPS), SMTP порты заблокированы
+    api_key = settings.RESEND_API_KEY
+    if api_key:
+        return await _send_via_resend(to_email, subject, html_body, text_body, api_key)
 
     if not settings.SMTP_USER or not settings.SMTP_PASSWORD:
+        logger.warning("Email not sent: no SMTP or RESEND_API_KEY configured")
         return False
 
+    return await _send_via_smtp(to_email, subject, html_body, text_body)
+
+
+async def _send_via_resend(to_email: str, subject: str, html_body: str, text_body: str, api_key: str) -> bool:
+    try:
+        import resend
+        resend.api_key = api_key
+        from_email = settings.SMTP_FROM_EMAIL or "onboarding@resend.dev"
+        from_name = settings.SMTP_FROM_NAME or "Recipes Online"
+        from_addr = f"{from_name} <{from_email}>"
+        params = {
+            "from": from_addr,
+            "to": [to_email],
+            "subject": subject,
+            "html": html_body,
+        }
+        if text_body:
+            params["text"] = text_body
+        resend.Emails.send(params)
+        logger.info("Email sent via Resend to %s", to_email)
+        return True
+    except Exception as e:
+        logger.exception("Resend email failed: %s", e)
+        return False
+
+
+async def _send_via_smtp(to_email: str, subject: str, html_body: str, text_body: str) -> bool:
     try:
         message = MIMEMultipart("alternative")
         message["Subject"] = subject
-        message["From"] = f"{settings.SMTP_FROM_NAME} <{settings.SMTP_FROM_EMAIL}>"
+        from_name = settings.SMTP_FROM_NAME or "Recipes"
+        from_email = settings.SMTP_FROM_EMAIL or settings.SMTP_USER
+        message["From"] = f"{from_name} <{from_email}>"
         message["To"] = to_email
 
         if text_body:
@@ -21,13 +60,13 @@ async def send_email(to_email: str, subject: str, html_body: str, text_body: str
         html_part = MIMEText(html_body, "html", "utf-8")
         message.attach(html_part)
 
-        if settings.SMTP_PORT == 465:
+        port_val = int(settings.SMTP_PORT) if settings.SMTP_PORT else 587
+        if port_val == 465:
             ports_to_try = [(465, True)]
-        elif settings.SMTP_PORT == 587:
-            ports_to_try = [(465, True), (587, False)]
+        elif port_val == 587:
+            ports_to_try = [(587, False)]
         else:
-            use_tls = settings.SMTP_PORT == 465
-            ports_to_try = [(settings.SMTP_PORT, use_tls)]
+            ports_to_try = [(port_val, port_val == 465)]
 
         last_error = None
         for port, use_tls in ports_to_try:
@@ -79,7 +118,7 @@ async def send_email(to_email: str, subject: str, html_body: str, text_body: str
         raise last_error if last_error else Exception("All SMTP connection attempts failed")
 
     except Exception as e:
-        error_str = str(e).lower()
+        logger.exception("SMTP email failed: %s", e)
         return False
 
 def get_password_reset_email_html(reset_url: str) -> str:
