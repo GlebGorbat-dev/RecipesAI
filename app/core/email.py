@@ -25,9 +25,9 @@ async def _send_via_resend(to_email: str, subject: str, html_body: str, text_bod
     try:
         import resend
         resend.api_key = api_key
-        from_email = settings.SMTP_FROM_EMAIL or "onboarding@resend.dev"
+        # Resend требует верифицированный домен. onboarding@resend.dev работает без верификации.
         from_name = settings.SMTP_FROM_NAME or "Recipes Online"
-        from_addr = f"{from_name} <{from_email}>"
+        from_addr = f"{from_name} <onboarding@resend.dev>"
         params = {
             "from": from_addr,
             "to": [to_email],
