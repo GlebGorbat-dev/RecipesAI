@@ -8,8 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 async def send_email(to_email: str, subject: str, html_body: str, text_body: str = None) -> bool:
-    """Send email. Prefers Resend API (works on HF Spaces); falls back to SMTP."""
-    # Resend API — работает на HF Spaces (HTTPS), SMTP порты заблокированы
     api_key = settings.RESEND_API_KEY
     if api_key:
         return await _send_via_resend(to_email, subject, html_body, text_body, api_key)
@@ -25,7 +23,6 @@ async def _send_via_resend(to_email: str, subject: str, html_body: str, text_bod
     try:
         import resend
         resend.api_key = api_key
-        # Resend требует верифицированный домен. onboarding@resend.dev работает без верификации.
         from_name = settings.SMTP_FROM_NAME or "Recipes Online"
         from_addr = f"{from_name} <onboarding@resend.dev>"
         params = {
@@ -76,13 +73,11 @@ async def _send_via_smtp(to_email: str, subject: str, html_body: str, text_body:
                     hostname=settings.SMTP_HOST,
                     port=port,
                     use_tls=use_tls,
-                    timeout=20,  # Reduced timeout for faster fallback
+                    timeout=20,
                 )
 
-                # Connect to SMTP server
                 await smtp.connect(timeout=20)
 
-                # For port 587, start TLS after connection
                 if port == 587 and not use_tls:
                     try:
                         await smtp.starttls(timeout=20)
@@ -91,13 +86,9 @@ async def _send_via_smtp(to_email: str, subject: str, html_body: str, text_body:
                         if "already using tls" not in error_msg and "already using ssl" not in error_msg:
                             raise
 
-                # Authenticate
                 await smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-
-                # Send email
                 await smtp.send_message(message)
 
-                # Success - close connection and return
                 try:
                     if smtp.is_connected:
                         await smtp.quit()

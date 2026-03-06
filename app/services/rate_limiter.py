@@ -39,7 +39,6 @@ def check_allowed(user_id: int, limit_per_hour: int | None) -> bool:
             return True
         except Exception:
             pass
-    # fallback in-memory
     lst = _memory[user_id]
     lst[:] = [t for t in lst if t > cutoff]
     if len(lst) >= limit_per_hour:

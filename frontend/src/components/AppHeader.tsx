@@ -36,7 +36,6 @@ export default function AppHeader() {
           Recipes Online
         </HashLink>
 
-        {/* Desktop nav */}
         <nav className="hidden items-center gap-3 sm:flex">
           <HashLink
             href="#/ask"
@@ -59,7 +58,6 @@ export default function AppHeader() {
           </button>
         </nav>
 
-        {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="flex h-10 w-10 items-center justify-center rounded-lg text-stone-700 hover:bg-amber-100 sm:hidden"
@@ -77,7 +75,6 @@ export default function AppHeader() {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
       {menuOpen && (
         <nav className="flex flex-col gap-2 border-t border-amber-200/60 bg-white px-4 pb-4 pt-3 sm:hidden">
           <HashLink

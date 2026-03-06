@@ -7,7 +7,6 @@ engine = create_engine(settings.DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Регистрируем модели и создаём таблицы
 from app.models import User, PasswordResetToken, Subscription, Recipe
 Base.metadata.create_all(bind=engine)
 

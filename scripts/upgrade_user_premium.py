@@ -2,7 +2,6 @@
 import os
 import sys
 
-# Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from dotenv import load_dotenv
@@ -23,7 +22,6 @@ def main():
             print(f"User not found: {email}")
             sys.exit(1)
         user_id = r[0]
-        # Check enum values (PostgreSQL stores them in pg_enum)
         enum_vals = conn.execute(text(
             "SELECT enumlabel FROM pg_enum e JOIN pg_type t ON e.enumtypid = t.oid WHERE t.typname = 'subscriptionplan'"
         )).fetchall()

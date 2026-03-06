@@ -42,9 +42,8 @@ class GoogleOAuthCallback(BaseModel):
 
 
 class SubscriptionResponse(BaseModel):
-    """Подписка пользователя (для /users/me или отдельного эндпоинта)."""
-    plan: str  # "free" | "premium"
+    plan: str
     is_premium: bool
-    ai_requests_limit_per_hour: Optional[int] = None  # 5 для free, None для premium
-    current_period_end: Optional[datetime] = None  # для premium
+    ai_requests_limit_per_hour: Optional[int] = None
+    current_period_end: Optional[datetime] = None
 

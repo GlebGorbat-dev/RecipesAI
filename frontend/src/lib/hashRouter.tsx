@@ -55,14 +55,20 @@ export function useHashNavigate() {
   return ctx.navigate;
 }
 
-/** Full path for redirects (e.g. after OAuth, payment). Works with window.location.href and <a href>. */
 export function getHashHref(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   const base = BASE ? (BASE.endsWith("/") ? BASE.slice(0, -1) : BASE) : "";
   return base ? `${base}#${p}` : `#${p}`;
 }
 
-/** Link that navigates to app root + hash (e.g. /RecipesAI/#/profile). Works from any page. */
+export function getHashRedirectUrl(path: string): string {
+  if (typeof window === "undefined") return `/#${path.startsWith("/") ? path : `/${path}`}`;
+  const p = path.startsWith("/") ? path : `/${path}`;
+  const base = BASE ? (BASE.endsWith("/") ? BASE.slice(0, -1) : BASE) : "";
+  const pathname = base || "/";
+  return `${window.location.origin}${pathname}#${p}`;
+}
+
 export function HashLink({
   href,
   children,

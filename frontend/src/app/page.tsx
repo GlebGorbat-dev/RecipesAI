@@ -11,10 +11,7 @@ import ForgotPasswordPage from "@/components/pages/ForgotPasswordPage";
 export default function HashRoutedPage() {
   const path = useHashPath();
 
-  // Normalize: "/" or "" -> home
   const normalized = path === "" || path === "/" ? "/" : path.replace(/\/+$/, "");
-
-  // /recipes/123 -> RecipeDetail with id 123
   const recipesMatch = normalized.match(/^\/recipes\/([^/]+)$/);
   if (recipesMatch) {
     return <RecipeDetailPage id={recipesMatch[1]} />;

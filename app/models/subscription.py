@@ -7,8 +7,8 @@ import enum
 
 
 class SubscriptionPlan(str, enum.Enum):
-    FREE = "free"       # 5 запросов/час к AI
-    PREMIUM = "premium" # неограниченные запросы
+    FREE = "free"
+    PREMIUM = "premium"
 
 
 class Subscription(Base):
@@ -23,10 +23,9 @@ class Subscription(Base):
         nullable=False
     )
 
-    # Stripe (для premium)
     stripe_customer_id = Column(String, unique=True, index=True, nullable=True)
     stripe_subscription_id = Column(String, unique=True, index=True, nullable=True)
-    current_period_end = Column(DateTime(timezone=True), nullable=True)  # когда заканчивается оплаченный период
+    current_period_end = Column(DateTime(timezone=True), nullable=True)
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

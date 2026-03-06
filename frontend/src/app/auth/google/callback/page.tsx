@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { getHashHref } from "@/lib/hashRouter";
+import { getHashHref, getHashRedirectUrl } from "@/lib/hashRouter";
 import { API_URL } from "@/lib/api";
 
 function GoogleCallbackContent() {
@@ -45,7 +45,7 @@ function GoogleCallbackContent() {
         if (cancelled || !data) return;
         setToken(data.access_token);
         setStatus("success");
-        window.location.href = getHashHref("/recipes");
+        window.location.href = getHashRedirectUrl("/recipes");
       })
       .catch((err) => {
         if (!cancelled && err?.name !== "AbortError") {
@@ -66,7 +66,7 @@ function GoogleCallbackContent() {
       {status === "error" && (
         <>
           <p className="text-xl text-red-600">{error}</p>
-          <a href={getHashHref("/")} className="text-amber-600 hover:underline">
+          <a href={getHashRedirectUrl("/")} className="text-amber-600 hover:underline">
             Back to home
           </a>
         </>
