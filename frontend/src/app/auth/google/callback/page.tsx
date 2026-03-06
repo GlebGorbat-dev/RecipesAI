@@ -20,11 +20,18 @@ function GoogleCallbackContent() {
       setError("Missing authorization code");
       return;
     }
+    const sentKey = `oauth_sent_${code}`;
+    if (typeof window !== "undefined" && sessionStorage.getItem(sentKey)) {
+      return;
+    }
+    sessionStorage.setItem(sentKey, "1");
     let cancelled = false;
+    const controller = new AbortController();
     fetch(`${API_URL}/api/v1/auth/google/callback`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code, state }),
+      signal: controller.signal,
     })
       .then(async (res) => {
         if (cancelled) return null;
@@ -41,12 +48,16 @@ function GoogleCallbackContent() {
         window.location.href = getHashHref("/recipes");
       })
       .catch((err) => {
-        if (!cancelled) {
+        if (!cancelled && err?.name !== "AbortError") {
+          sessionStorage.removeItem(sentKey);
           setStatus("error");
           setError(err instanceof Error ? err.message : "Authentication failed");
         }
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
   }, [searchParams, setToken]);
 
   return (
