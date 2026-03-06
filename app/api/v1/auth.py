@@ -170,6 +170,8 @@ async def forgot_password(
         return {"message": "If the email exists, a password reset link has been sent."}
 
     if user.auth_provider == "google":
+        import logging
+        logging.getLogger(__name__).info("Forgot password: user %s uses Google, skipping email", user.email)
         return {"message": "If the email exists, a password reset link has been sent."}
 
     token = secrets.token_urlsafe(32)
@@ -189,12 +191,14 @@ async def forgot_password(
     html_body = get_password_reset_email_html(reset_url)
     text_body = get_password_reset_email_text(reset_url)
 
-    await send_email(
+    import logging
+    sent = await send_email(
         to_email=str(user.email),
         subject="Password reset - Recipes Online",
         html_body=html_body,
         text_body=text_body,
     )
+    logging.getLogger(__name__).info("Forgot password email sent=%s to %s", sent, user.email)
 
     return {"message": "If the email exists, a password reset link has been sent."}
 
