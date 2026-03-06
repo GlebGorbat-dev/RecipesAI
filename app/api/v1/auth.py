@@ -169,9 +169,9 @@ async def forgot_password(
     if not user:
         return {"message": "If the email exists, a password reset link has been sent."}
 
-    if user.auth_provider == "google":
+    if not user.hashed_password:
         import logging
-        logging.getLogger(__name__).info("Forgot password: user %s uses Google, skipping email", user.email)
+        logging.getLogger(__name__).info("Forgot password: user %s has no password set, skipping email", user.email)
         return {"message": "If the email exists, a password reset link has been sent."}
 
     token = secrets.token_urlsafe(32)
